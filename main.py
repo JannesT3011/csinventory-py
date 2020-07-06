@@ -4,12 +4,12 @@ import json
 import time
 
 
-def process(steamid:str, to_json:bool=False) -> dict:
+def get_myinv_data(steamid:str, dump_to_json_file:bool=False) -> dict:
     try:
         data = urlopen('http://steamcommunity.com/profiles/'+steamid+'/inventory/json/730/2')
     except:
         time.sleep(60)
-        process(steamid)
+        get_myinv_data(steamid)
 
     json_data = json.loads(data.read())
     descriptions = json_data['rgDescriptions']
@@ -33,11 +33,33 @@ def process(steamid:str, to_json:bool=False) -> dict:
         items[_item]["itemid"] = _item_id
         items[_item]["amount"] = amount[_item_id]
 
-    if to_json:
+    if dump_to_json_file:
         json.dump(items, open("test.json", "w"))
         
     return items
-    
+
+def get_inventory(steamid:str) -> list:
+    try:
+        data = urlopen('http://steamcommunity.com/profiles/'+steamid+'/inventory/json/730/2')
+    except:
+        time.sleep(60)
+        get_inventory(steamid)
+
+    json_data = json.loads(data.read())
+    descriptions = json_data['rgDescriptions']
+    inv =  [descriptions[v]["market_hash_name"] for v in descriptions]
+
+    return inv
+
+def get_raw_data(steamid: str) -> dict:
+    try:
+        data = urlopen('http://steamcommunity.com/profiles/'+steamid+'/inventory/json/730/2')
+    except:
+        time.sleep(60)
+        get_inventory(steamid)
+
+    json_data = json.loads(data.read())
+    return json_data
 
 if __name__ == "__main__":
-    print(process("76561198439884801"))
+    print(get_raw_data("76561198439884801"))
