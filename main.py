@@ -34,7 +34,7 @@ def get_myinv_data(steamid:str, dump_to_json_file:bool=False) -> dict:
         items[_item]["amount"] = amount[_item_id]
 
     if dump_to_json_file:
-        json.dump(items, open("test.json", "w"))
+        json.dump(items, open("myinventory.json", "w"))
         
     return items
 
@@ -56,7 +56,7 @@ def get_raw_data(steamid: str) -> dict:
         data = urlopen('http://steamcommunity.com/profiles/'+steamid+'/inventory/json/730/2')
     except:
         time.sleep(60)
-        get_inventory(steamid)
+        get_raw_data(steamid)
 
     json_data = json.loads(data.read())
     return json_data
