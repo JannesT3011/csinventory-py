@@ -13,7 +13,7 @@ class CSInventory:
             data = urlopen('http://steamcommunity.com/profiles/'+self.steamid+'/inventory/json/730/2')
         except:
             time.sleep(60)
-            self.get_myinv_data(self.steamid)
+            data = urlopen('http://steamcommunity.com/profiles/'+self.steamid+'/inventory/json/730/2')
 
         json_data = json.loads(data.read())
         descriptions = json_data['rgDescriptions']
@@ -47,7 +47,7 @@ class CSInventory:
             data = urlopen('http://steamcommunity.com/profiles/'+self.steamid+'/inventory/json/730/2')
         except:
             time.sleep(60)
-            self.get_inventory()
+            data = urlopen('http://steamcommunity.com/profiles/'+self.steamid+'/inventory/json/730/2')
 
         json_data = json.loads(data.read())
         descriptions = json_data['rgDescriptions']
@@ -60,7 +60,7 @@ class CSInventory:
             data = urlopen('http://steamcommunity.com/profiles/'+self.steamid+'/inventory/json/730/2')
         except:
             time.sleep(60)
-            self.get_raw_data()
+            data = urlopen('http://steamcommunity.com/profiles/'+self.steamid+'/inventory/json/730/2')
 
         json_data = json.loads(data.read())
         return json_data
