@@ -2,7 +2,9 @@ import requests
 from urllib.request import urlopen
 import json
 import time
-
+from steampy.client import SteamClient
+from steampy.models import GameOptions
+import steampy
 
 class CSInventory:
     def __init__(self, steamid:str):
@@ -64,3 +66,28 @@ class CSInventory:
 
         json_data = json.loads(data.read())
         return json_data
+    
+    def get_inv_steamdata(self, api_token:str, dump_to_json_file:bool=False) -> dict:
+        inv = self.get_myinv_data(False)
+        new_inventory = {}
+
+        steam_client = SteamClient(api_token)
+
+        for item in inv:
+            if not item.startswith("Sealed Graffiti") or not item.startswith("Graffiti") or not item.endswith("Medal") or not item.endswith("Badge"):
+                try:
+                    _amount = inv[item]["amount"]
+                    _itemid = inv[item]["itemid"]
+                    new_inventory[item] = {}
+                    _steam_data = steam_client.market.fetch_price(item, GameOptions.CS)
+                    new_inventory[item] = _steam_data
+                    new_inventory[item]["amount"] = _amount
+                    new_inventory[item]["itemid"] = _itemid
+                except steampy.exceptions.TooManyRequests:
+                    time.sleep(60)
+        
+        if dump_to_json_file:
+            json.dump(new_inventory, open("myinventory.json", "w"))
+            return new_inventory
+
+        return new_inventory
