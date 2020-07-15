@@ -79,12 +79,21 @@ class CSInventory:
                     _amount = inv[item]["amount"]
                     _itemid = inv[item]["itemid"]
                     new_inventory[item] = {}
-                    _steam_data = steam_client.market.fetch_price(item, GameOptions.CS)
+                    _steam_data = steam_client.market.fetch_price(item, GameOptions.CS) 
                     new_inventory[item] = _steam_data
                     new_inventory[item]["amount"] = _amount
                     new_inventory[item]["itemid"] = _itemid
+                    print(_steam_data["median_price"])
+                    _median_price = float(_steam_data["median_price"].split(" USD")[0].split("$")[1])
+                    _lowsest_price = float(_steam_data["lowest_price"].split(" USD")[0].split("$")[1])
+                    new_inventory[item]["total_median"]  = round(_amount * _median_price, 2)
+                    new_inventory[item]["total_cashout"] = round(_amount * _lowsest_price, 2) 
+                    new_inventory[item]["median_price"] = _median_price
+                    new_inventory[item]["lowest_price"] = _lowsest_price
                 except steampy.exceptions.TooManyRequests:
                     time.sleep(60)
+                except KeyError:
+                    pass
         
         if dump_to_json_file:
             json.dump(new_inventory, open("myinventory.json", "w"))
