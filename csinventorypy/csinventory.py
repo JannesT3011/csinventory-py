@@ -83,7 +83,6 @@ class CSInventory:
                     new_inventory[item] = _steam_data
                     new_inventory[item]["amount"] = _amount
                     new_inventory[item]["itemid"] = _itemid
-                    print(_steam_data["median_price"])
                     _median_price = float(_steam_data["median_price"].split(" USD")[0].split("$")[1])
                     _lowsest_price = float(_steam_data["lowest_price"].split(" USD")[0].split("$")[1])
                     new_inventory[item]["total_median"]  = round(_amount * _median_price, 2)
