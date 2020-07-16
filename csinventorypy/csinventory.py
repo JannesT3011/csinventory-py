@@ -102,7 +102,7 @@ class CSInventory:
         steam_client = SteamClient(api_token)
 
         for item in inv:
-            if not item.startswith("Sealed Graffiti") or not item.startswith("Graffiti") or not item.endswith("Medal") or not item.endswith("Badge"):
+            if not item.startswith("Sealed Graffiti") or not item.startswith("Graffiti") or not item.endswith("Service Medal") or not item.endswith("Badge"):
                 try:
                     _amount = inv[item]["amount"]
                     _itemid = inv[item]["itemid"]
