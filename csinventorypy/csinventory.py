@@ -7,10 +7,22 @@ from steampy.models import GameOptions
 import steampy
 
 class CSInventory:
+    """ Create instance of CSInventory
+    :param steamid: The SteamID of the user
+    :type steamid: str
+    """
     def __init__(self, steamid:str):
+        """ Constructor Mehtod
+        """
         self.steamid = steamid
 
     def get_myinv_data(self, dump_to_json_file:bool=False) -> dict:
+        """ Get the data of your inventory, hash_name, itemid and amount
+        :param dump_to_json: Dump data to myinventory.json
+        :type dump_to_json: bool, optional
+        :return: Your inventory data
+        :rtype: dict
+        """
         try:
             data = urlopen('http://steamcommunity.com/profiles/'+self.steamid+'/inventory/json/730/2')
         except:
@@ -45,6 +57,10 @@ class CSInventory:
         return items
 
     def get_inventory(self) -> list:
+        """ Returns your inventory items, only the hash_market_names
+        :return: List of your inventory itemnames
+        :rtype: list
+        """
         try:
             data = urlopen('http://steamcommunity.com/profiles/'+self.steamid+'/inventory/json/730/2')
         except:
@@ -58,6 +74,10 @@ class CSInventory:
         return inv
 
     def get_raw_data(self) -> dict:
+        """ Get your raw inventory json data
+        :return: dict of raw inventory data from the steam api
+        :rtype: dict
+        """
         try:
             data = urlopen('http://steamcommunity.com/profiles/'+self.steamid+'/inventory/json/730/2')
         except:
@@ -68,6 +88,14 @@ class CSInventory:
         return json_data
     
     def get_inv_steamdata(self, api_token:str, dump_to_json_file:bool=False) -> dict:
+        """ Get your inventory data + the steammarket data
+        :param api_token: Your steamAPI key
+        :type api_token: str
+        :param dump_to_json: Dump inventory data to myinventory.json file
+        :type dump_to_json: str, optional
+        :return: Dict of your inventory data + steammarket data
+        :rtype: dict
+        """
         inv = self.get_myinv_data(False)
         new_inventory = {}
 
