@@ -6,6 +6,8 @@ from steampy.client import SteamClient
 from steampy.models import GameOptions
 import steampy
 
+_blacklist = []
+
 class CSInventory:
     """ Create instance of CSInventory
     :param steamid: The SteamID of the user
@@ -102,7 +104,7 @@ class CSInventory:
         steam_client = SteamClient(api_token)
 
         for item in inv:
-            if not item.startswith("Sealed Graffiti") or not item.startswith("Graffiti") or not item.endswith("Medal") or not item.endswith("Badge") or not item.startswith("Storage"):
+            if not item.startswith("Sealed Graffiti") and not item.startswith("Graffiti") and not item.endswith("Medal") and not item.endswith("Badge") and not item.startswith("Storage"):
                 try:
                     _amount = inv[item]["amount"]
                     _itemid = inv[item]["itemid"]
