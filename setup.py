@@ -6,7 +6,7 @@ with open("README.md") as ld:
 
 setup(
     name="csinventory-py",
-    version="0.1",
+    version="0.1.1",
     author="Bmbus",
     description="Python package to get your Counter-Strike inventory",
     long_description=long_description,
