@@ -5,6 +5,11 @@ Python package to get your Counter-Strike inventory
 ``pip install csinventory-py==0.1.1``
 
 ## Example
+```python
+from csinventorypy import CSInventory
+csinv = CSInventory(id)
+inventory = csinv.get_myinv_data(dump_to_json_file=False) 
+```
 [CLICK!](https://github.com/Bmbus/csinventory-py/tree/master/examples)
 
 ## Functions
